@@ -3,11 +3,11 @@
 Project website placeholder. The full website will be added later.
 
 - Organization: https://github.com/PhysicalWorldAgent
-- Website: https://physicalworldagent.github.io/
+- Website: https://PhysicalWorldAgent.github.io/
 - Main project repository: https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent
-- Website hosting repository: https://github.com/PhysicalWorldAgent/physicalworldagent.github.io
+- Website hosting repository: https://github.com/PhysicalWorldAgent/PhysicalWorldAgent.github.io
 
-Project resources belong in `Awesome-PhysicalWorldAgent`. This repository hosts the organization's root website and therefore uses the GitHub Pages name `physicalworldagent.github.io`.
+Project resources belong in `Awesome-PhysicalWorldAgent`. This repository hosts the organization's root website and therefore uses the GitHub Pages name `PhysicalWorldAgent.github.io`.
 
 ## Website updates
 
