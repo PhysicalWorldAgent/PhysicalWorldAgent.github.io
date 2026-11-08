@@ -74,9 +74,21 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .lead { max-width: 36em; margin: 0 0 18px; font: 400 clamp(17px, 1.6vw, 20px)/1.6 var(--mono); }
 .claim { margin: 0 0 56px; font: 400 clamp(22px, 2.4vw, 30px)/1.3 var(--marker); }
 .claim b { font-weight: 400; color: var(--red); }
-.teaser { margin: 0 0 32px; background: var(--white); border: 3px solid var(--ink); padding: 12px; }
-.teaser img { display: block; width: 100%; height: auto; }
-.teaser figcaption { margin-top: 10px; font: 400 16px/1 var(--marker); text-align: center; }
+/* the paper's figures: white sheets with the caption beneath; tap to enlarge */
+.fig { margin: 0 0 32px; }
+.zoom { display: block; width: 100%; padding: 10px; background: #fff; border: 3px solid var(--ink); cursor: zoom-in; transition: box-shadow .15s, transform .15s; }
+.zoom:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+.zoom img { display: block; width: 100%; height: auto; }
+.fig figcaption { display: grid; grid-template-columns: 5.2em minmax(0, 1fr); gap: 2px 14px; margin-top: 14px; }
+.fig .no { grid-row: span 2; font: 400 18px/1.25 var(--marker); color: var(--red); text-transform: uppercase; }
+.fig .t { font: 400 19px/1.25 var(--marker); text-transform: uppercase; }
+.fig .d { font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 60em; }
+.figs { display: grid; gap: 64px; }
+.figs .fig { margin: 0; }
+.lightbox { width: min(96vw, 1500px); max-width: none; max-height: 94vh; padding: 0; border: 4px solid var(--ink); background: #fff; overflow: auto; }
+.lightbox::backdrop { background: rgba(22, 19, 15, .82); }
+.lightbox img { display: block; width: 100%; height: auto; }
+.lb-close { position: sticky; top: 8px; float: right; margin: 8px 8px -48px 0; z-index: 1; width: 40px; height: 40px; font: 400 26px/1 var(--marker); background: var(--red); color: var(--white); border: 3px solid var(--ink); cursor: pointer; }
 .more summary { cursor: pointer; font: 400 17px/1 var(--marker); list-style: none; display: inline-block; border-bottom: 3px solid var(--red); padding-bottom: 4px; }
 .more summary::-webkit-details-marker { display: none; }
 .more summary::after { content: " +"; }
@@ -168,4 +180,10 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
   h1 > span:nth-child(2) { transform: translateX(.4em); }
   .authors { font-size: 13.5px; gap: 0 10px; }
   .wall { grid-template-columns: 1fr; }
+  .fig figcaption { grid-template-columns: 1fr; }
+  .fig .no { grid-row: auto; font-size: 15px; }
+  .fig .t { font-size: 17px; }
+  .fig .d { font-size: 13px; }
+  .zoom { padding: 4px; }
+  .figs { gap: 48px; }
 }

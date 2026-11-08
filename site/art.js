@@ -280,9 +280,9 @@
   const reveal = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add("in"); reveal.unobserve(en.target); }
   }), { rootMargin: "0px 0px -10% 0px" });
-  document.querySelectorAll(".teaser, .loop, .stages, .card, .closing, .five, .bib").forEach((node) => {
-    const sibs = [...node.parentElement.children].filter((c) => c.tagName === node.tagName);
-    node.style.setProperty("--rd", `${Math.min(sibs.indexOf(node), 7) * 0.07}s`);
+  document.querySelectorAll(".fig, .loop, .stages, .card, .closing, .five, .bib").forEach((node) => {
+    // cards in a row arrive one after another
+    if (node.matches(".card")) node.style.setProperty("--rd", `${[...node.parentElement.children].indexOf(node) * 0.07}s`);
     node.classList.add("reveal");
     reveal.observe(node);
   });
@@ -314,6 +314,15 @@
   // the header gains a yellow ground once the hero has scrolled away
   const bar = document.querySelector(".bar");
   new IntersectionObserver(([en]) => bar.classList.toggle("solid", !en.isIntersecting), { rootMargin: "-80px 0px 0px 0px" }).observe(document.querySelector(".hero .copy"));
+
+  // figures open full size in a lightbox; a click anywhere or Escape closes it
+  const box = document.querySelector(".lightbox"), boxImg = box.querySelector("img");
+  document.querySelectorAll(".zoom").forEach((b) => b.addEventListener("click", () => {
+    const img = b.querySelector("img");
+    boxImg.src = img.currentSrc || img.src; boxImg.alt = img.alt;
+    box.showModal();
+  }));
+  box.addEventListener("click", () => box.close());
 
   // copy BibTeX
   document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {

@@ -14,7 +14,8 @@ Project resources belong in `Awesome-PhysicalWorldAgent`. This repository hosts 
 index.html          page text and structure
 site/styles.css     design: a painted yellow ground, oil-stick lettering, typewritten notes
 site/art.js         the hero painting (drawn from a seeded random source), reveals, BibTeX copy
-assets/teaser.webp  the paper's opening figure
+assets/figures/     the paper's thirteen figures, cropped from the compiled PDF
+assets/teaser.webp  the opening illustration without labels (social preview)
 assets/art/*.webp   illustrations from the paper, used on the findings cards
 favicon.svg         the robot head
 ```
