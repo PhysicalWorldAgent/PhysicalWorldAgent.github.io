@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-  <link rel="stylesheet" href="site/styles.css?v=10">
+  <link rel="stylesheet" href="site/styles.css?v=11">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ScholarlyArticle","name":"When the World Is the Test Suite: Agentic Intelligence for the Physical World","datePublished":"2026","url":"https://PhysicalWorldAgent.github.io/",
    "author":[{"@type":"Person","name":"Kaixin Li"},{"@type":"Person","name":"Meng Luo"},{"@type":"Person","name":"Yanlin Li"},{"@type":"Person","name":"Yuchen Tian"},{"@type":"Person","name":"Xiang Liu"},{"@type":"Person","name":"Xiangru Jian"},{"@type":"Person","name":"Yan Yang"},{"@type":"Person","name":"Zhiheng Xi"},{"@type":"Person","name":"Yang Zhang"},{"@type":"Person","name":"Ziyang Luo"},{"@type":"Person","name":"Mingfei Cheng"},{"@type":"Person","name":"Hongzhan Lin"}],
@@ -32,8 +32,9 @@
   <nav aria-label="Sections">
     <a href="#abstract">Survey</a>
     <a href="#loop">Loop</a>
-    <a href="#findings">Findings</a>
-    <a href="#figures">Figures</a>
+    <a href="#programs">Programs</a>
+    <a href="#tests">Tests</a>
+    <a href="#learning">Learning</a>
     <a href="#cite">Cite</a>
   </nav>
   <a class="bar-link" href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub</a>
@@ -87,10 +88,12 @@
         <p>Coding agents built to repair software now write, test, and repair programs for robots. Unlike in software, the test suite does not come with the code: whether a robot program works must be established by running it on a robot, in a physics simulator, or through the policies it helps to train. We examine this emerging area, agentic intelligence for the physical world, by treating the world as the program's test suite. We locate each program along two axes. The first is where it sits relative to the actuator, from programs that act or orchestrate learned policies to programs that write rewards and build training worlds. The second is what judges it, from simulator predicates and learned judges to humans and physical outcomes.</p>
         <p>Along both axes, the same bottleneck appears: producing a program is becoming cheap, while obtaining trustworthy evidence about what it does remains costly and error-prone. This bottleneck limits what current results can claim. Comparisons that favor programs over end-to-end policies cover mainly conditions where those policies are known to be weak. Judges make errors that optimization can amplify, and skill libraries can improve on average while individual tasks regress. Drawing on software engineering, we identify which of its practices transfer to physical agents and which break, and we analyze what current evaluations rarely report: cost, variance, the error and visibility of the judge, and the link between simulation and reality. We argue that progress will depend less on writing better programs than on building a physical counterpart of continuous integration: verification cheap enough to run often, reliable enough to trust under search, and maintained alongside the experience it validates, so that agents can keep improving as they act in the world.</p>
       </details>
+      <figure class="fig after"><button type="button" class="zoom" aria-label="Enlarge Figure 4"><img src="assets/figures/figure-4.webp" width="1600" height="1160" loading="lazy" alt="Figure 4. A timeline in four phases: language models choose skills (2022), programs as policies (late 2022 to 2023), programs move away from the actuator (mid 2023 to 2025), and coding agents in the loop (2026)."></button>
+          <figcaption><span class="no">Fig. 4</span><span class="t">Four phases of agentic intelligence for the physical world.</span><span class="d">Language models for robots moved from choosing skills to writing programs, and coding agents from software engineering joined this line in 2026.</span></figcaption></figure>
     </div>
   </section>
 
-  <!-- 02 the loop: four stages, each with one line of the opening scene and one risk -->
+  <!-- 02 the loop: four stages of the opening scene, then the loop and its weak points as the paper draws them -->
   <section class="sec yellow" id="loop" aria-labelledby="loop-h">
     <div class="sec-in">
       <h2 id="loop-h"><span>Where the loop breaks</span></h2>
@@ -122,51 +125,73 @@
           <p class="risk">A library keeps whatever its acceptance test lets through.</p></div>
         </section>
       </div>
-    </div>
-  </section>
-
-  <!-- 03 four numbers -->
-  <section class="sec" id="findings" aria-labelledby="findings-h">
-    <div class="sec-in">
-      <h2 id="findings-h"><span>Four numbers</span></h2>
-      <div class="wall">
-        <article class="card"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14&rarr;62%</p><p>Success once the agent can watch its program run and reuse what worked.</p><p class="src">ASPIRE</p></article>
-        <article class="card"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">24 h</p><p>One full run on eight GPUs, because judging a generated world means training in it.</p><p class="src">Eurekaverse</p></article>
-        <article class="card"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>Best balanced accuracy of thirteen VLM judges of robot outcomes.</p><p class="src">FailBench</p></article>
-        <article class="card"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68&rarr;0.26</p><p>One task's success as the skill library grows.</p><p class="src">ASPIRE</p></article>
+      <div class="pair">
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 2"><img src="assets/figures/figure-2.webp" width="1600" height="849" loading="lazy" alt="Figure 2. The kitchen robot writes a program, runs it on the stove or in a physics simulator, has the outcome judged by a camera, and repairs the program or keeps what passes in a skill library."></button>
+          <figcaption><span class="no">Fig. 2</span><span class="t">When the world is the test suite.</span><span class="d">The kitchen robot writes a program to put a moka pot on the stove &#9312;, runs it &#9313;, has the outcome judged &#9314;, and repairs the program or keeps what passes &#9315;.</span></figcaption></figure>
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 5"><img src="assets/figures/figure-5.webp" width="1600" height="867" loading="lazy" alt="Figure 5. Six panels contrasting software and physical tasks: executable specifications, repeatability, environment reset, evaluation cost, physical containment, and observability."></button>
+          <figcaption><span class="no">Fig. 5</span><span class="t">Where software assumptions need support in the physical world.</span><span class="d">A physical task needs a success criterion &#9312;, an account of trial-to-trial variation &#9313;, a reset &#9314;, a budget for costly tests &#9315;, limits on unsafe commands &#9316;, and a statement of what the agent can observe &#9317;.</span></figcaption></figure>
       </div>
     </div>
   </section>
 
-  <!-- 04 every figure in the paper after the first, with its caption; tap one to enlarge it -->
-  <section class="sec yellow" id="figures" aria-labelledby="figures-h">
+  <!-- 03 writing programs: where a program sits, and what that buys -->
+  <section class="sec" id="programs" aria-labelledby="programs-h">
     <div class="sec-in">
-      <h2 id="figures-h"><span>Figures</span></h2>
-      <div class="figs">
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 2"><img src="assets/figures/figure-2.webp" width="1600" height="849" loading="lazy" alt="Figure 2. The kitchen robot writes a program, runs it on the stove or in a physics simulator, has the outcome judged by a camera, and repairs the program or keeps what passes in a skill library."></button>
-          <figcaption><span class="no">Fig. 2</span><span class="t">When the world is the test suite.</span><span class="d">The kitchen robot writes a program to put a moka pot on the stove &#9312;, runs it &#9313;, has the outcome judged &#9314;, and repairs the program or keeps what passes &#9315;. The two tags mark the program role and the evaluation source.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 3"><img src="assets/figures/figure-3.webp" width="1600" height="1604" loading="lazy" alt="Figure 3. A map of the article in six panels, from software tests to physical tests through programs as policies, programs for policy learning, testing, learning, and benchmarks, each listing representative work."></button>
+      <h2 id="programs-h"><span>Programs that act, and programs that teach</span></h2>
+      <p class="lead">Some programs drive the robot or orchestrate learned skills. Others write the rewards, worlds and demonstrations a policy learns from.</p>
+      <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 6"><img src="assets/figures/figure-6.webp" width="1600" height="925" loading="lazy" alt="Figure 6. Four panels: primitive interfaces, online revision and offline development, orchestrating learned skills, and programs versus end-to-end policies."></button>
+          <figcaption><span class="no">Fig. 6</span><span class="t">Programs as robot policies: four questions.</span><span class="d">What a program can call &#9312;, when it is revised &#9313;, how it coordinates learned skills &#9314;, and when it outperforms an end-to-end policy &#9315;.</span></figcaption></figure>
+      <div class="with-stat">
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 7"><img src="assets/figures/figure-7.webp" width="1600" height="565" loading="lazy" alt="Figure 7. Bar chart of success under five perturbations for OpenVLA, pi-zero, pi-zero-point-five, CaP-Agent0, RATs, RHO and ASPIRE."></button>
+          <figcaption><span class="no">Fig. 7</span><span class="t">What the code-versus-VLA comparisons on LIBERO-PRO cover.</span><span class="d">Gray bars: OpenVLA, &pi;<sub>0</sub>, &pi;<sub>0.5</sub> under five perturbations. Colored bars: program-based methods, reported only under position and task perturbations (shaded).</span></figcaption></figure>
+        <aside class="stat"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14&rarr;62%</p><p>Success once the agent can watch its program run and reuse what worked.</p><p class="src">ASPIRE</p></aside>
+      </div>
+      <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 8"><img src="assets/figures/figure-8.webp" width="1600" height="695" loading="lazy" alt="Figure 8. Four panels: rewards, environments, demonstrations, and bodies and assets, each written as programs."></button>
+          <figcaption><span class="no">Fig. 8</span><span class="t">Programs for policy learning.</span><span class="d">A reward program shapes what a policy learns &#9312;; programs that build environments, demonstrations, bodies, and assets shape where it learns &#9313;&ndash;&#9315;.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 04 testing programs: evidence is costly and can be wrong -->
+  <section class="sec yellow" id="tests" aria-labelledby="tests-h">
+    <div class="sec-in">
+      <h2 id="tests-h"><span>Evidence is costly, and it can be wrong</span></h2>
+      <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 9"><img src="assets/figures/figure-9.webp" width="1600" height="868" loading="lazy" alt="Figure 9. Six panels: finding what went wrong, judging success, simulation and reality, formal specs and shields, when trials are restricted, and success versus safety."></button>
+          <figcaption><span class="no">Fig. 9</span><span class="t">How an agent learns that a program is wrong.</span><span class="d">Traces &#9312;, judges &#9313;, simulation &#9314;, formal specifications &#9315;, release checks when trials are restricted &#9316;, and safety beyond success &#9317;.</span></figcaption></figure>
+      <div class="with-stat flip">
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 10"><img src="assets/figures/figure-10.webp" width="1600" height="803" loading="lazy" alt="Figure 10. A staircase of six evaluation paths, from a static check through one episode, repeated runs, policy training and curriculum to hardware."></button>
+          <figcaption><span class="no">Fig. 10</span><span class="t">Evaluation paths for different kinds of programs.</span><span class="d">From checking code to training and testing the behavior it induces, with the budgets reported per execution, per candidate, or per search.</span></figcaption></figure>
+        <div class="stats">
+          <aside class="stat"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">24 h</p><p>One full run on eight GPUs, because judging a generated world means training in it.</p><p class="src">Eurekaverse</p></aside>
+          <aside class="stat"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>Best balanced accuracy of thirteen VLM judges of robot outcomes.</p><p class="src">FailBench</p></aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 learning: what is kept, and what keeping costs -->
+  <section class="sec" id="learning" aria-labelledby="learning-h">
+    <div class="sec-in">
+      <h2 id="learning-h"><span>What gets kept</span></h2>
+      <p class="lead">Accepted programs become experience, in skill libraries and in model weights. A library keeps whatever its acceptance test lets through.</p>
+      <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 11"><img src="assets/figures/figure-11.webp" width="1600" height="640" loading="lazy" alt="Figure 11. Five panels in a row: build, accept, maintain, transfer, and distill."></button>
+          <figcaption><span class="no">Fig. 11</span><span class="t">What happens to a program that passes its checks.</span><span class="d">It is stored &#9312;, often after an acceptance test &#9313;; the library must be maintained &#9314;, may transfer &#9315;, and can train a model's weights &#9316;.</span></figcaption></figure>
+      <div class="with-stat">
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 12"><img src="assets/figures/figure-12.webp" width="1600" height="615" loading="lazy" alt="Figure 12. Line chart of success against the number of source tasks seeding the library: overall success rises; the stove and moka pot task peaks near 0.68 at 50 and falls to 0.26 at 90."></button>
+          <figcaption><span class="no">Fig. 12</span><span class="t">What a growing skill library buys, and where it hurts.</span><span class="d">ASPIRE on LIBERO-PRO Long: average success rises with the library, while the stove and moka pot task falls from 0.68 to 0.26 between 50 and 90 source tasks.</span></figcaption></figure>
+        <aside class="stat"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68&rarr;0.26</p><p>One task's success as the skill library grows.</p><p class="src">ASPIRE</p></aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 where next, and the survey on one page -->
+  <section class="sec yellow" id="next" aria-labelledby="next-h">
+    <div class="sec-in">
+      <h2 id="next-h"><span>Where next</span></h2>
+      <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 13"><img src="assets/figures/figure-13.webp" width="1600" height="908" loading="lazy" alt="Figure 13. Four panels: program representation, reliable verification, skill maintenance, and reproducible evaluation."></button>
+          <figcaption><span class="no">Fig. 13</span><span class="t">Four challenges and future directions.</span><span class="d">Program representation &#9312;, reliable verification &#9313;, skill maintenance &#9314;, and reproducible evaluation &#9315;.</span></figcaption></figure>
+      <div class="map">
+        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 3"><img src="assets/figures/figure-3.webp" width="1600" height="1604" loading="lazy" alt="Figure 3. A map of the article in six panels, each listing representative work."></button>
           <figcaption><span class="no">Fig. 3</span><span class="t">Organization of the article and representative work.</span><span class="d">Each panel is one part of the article and lists representative work discussed there.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 4"><img src="assets/figures/figure-4.webp" width="1600" height="1160" loading="lazy" alt="Figure 4. A timeline in four phases: language models choose skills (2022), programs as policies (late 2022 to 2023), programs move away from the actuator (mid 2023 to 2025), and coding agents in the loop (2026)."></button>
-          <figcaption><span class="no">Fig. 4</span><span class="t">Four phases of agentic intelligence for the physical world.</span><span class="d">Language models for robots moved from choosing skills to writing programs whose effects are judged through physical execution, and general-purpose coding agents from software engineering joined this line in 2026.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 5"><img src="assets/figures/figure-5.webp" width="1600" height="867" loading="lazy" alt="Figure 5. Six panels contrasting software and physical tasks: executable specifications, repeatability, environment reset, evaluation cost, physical containment, and observability."></button>
-          <figcaption><span class="no">Fig. 5</span><span class="t">Where software assumptions need support in the physical world.</span><span class="d">A physical task needs an explicit success criterion &#9312;, an account of how outcomes vary between trials &#9313;, a reset procedure &#9314;, a budget for costly tests &#9315;, limits on unsafe commands &#9316;, and a statement of what the agent can observe &#9317;.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 6"><img src="assets/figures/figure-6.webp" width="1600" height="925" loading="lazy" alt="Figure 6. Four panels: primitive interfaces, online revision and offline development, orchestrating learned skills, and programs versus end-to-end policies."></button>
-          <figcaption><span class="no">Fig. 6</span><span class="t">Programs as robot policies: four questions.</span><span class="d">What a program can call &#9312;, when it is revised during an episode or developed offline &#9313;, how it coordinates learned skills &#9314;, and when it outperforms an end-to-end policy &#9315;.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 7"><img src="assets/figures/figure-7.webp" width="1600" height="565" loading="lazy" alt="Figure 7. Bar chart of success rate under five perturbations, object, position, paraphrase, task and environment, for OpenVLA, pi-zero, pi-zero-point-five, CaP-Agent0, RATs, RHO and ASPIRE."></button>
-          <figcaption><span class="no">Fig. 7</span><span class="t">What the code-versus-VLA comparisons on LIBERO-PRO cover.</span><span class="d">Results on the Goal suite. Gray bars show OpenVLA, &pi;<sub>0</sub>, and &pi;<sub>0.5</sub> under LIBERO-PRO's five perturbations. Colored bars show program-based methods, which report results only under the position and task perturbations (shaded).</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 8"><img src="assets/figures/figure-8.webp" width="1600" height="695" loading="lazy" alt="Figure 8. Four panels: rewards, environments, demonstrations, and bodies and assets, each written as programs."></button>
-          <figcaption><span class="no">Fig. 8</span><span class="t">Programs for policy learning.</span><span class="d">A reward program shapes what a policy learns &#9312;, and programs that build environments, demonstrations, bodies, and assets shape the conditions in which it learns &#9313;&ndash;&#9315;.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 9"><img src="assets/figures/figure-9.webp" width="1600" height="868" loading="lazy" alt="Figure 9. Six panels: finding what went wrong, judging success, simulation and reality, formal specs and shields, when trials are restricted, and success versus safety."></button>
-          <figcaption><span class="no">Fig. 9</span><span class="t">How an agent learns that a program is wrong.</span><span class="d">A trace locates the failing call &#9312;, a judge decides whether the outcome counts as success &#9313;, and simulation tests the program in place of the robot &#9314;. Formal specifications check a program before it runs &#9315;, other checks decide its release when physical trials are restricted &#9316;, and a successful run can still be unsafe &#9317;.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 10"><img src="assets/figures/figure-10.webp" width="1600" height="803" loading="lazy" alt="Figure 10. A staircase of six evaluation paths, from a static check through one episode, repeated runs, policy training and curriculum to hardware, with examples and their budgets."></button>
-          <figcaption><span class="no">Fig. 10</span><span class="t">Evaluation paths for different kinds of programs.</span><span class="d">Evaluation ranges from checking code to training and testing the behavior it induces. Examples from the reviewed work report budgets per execution, per candidate, or per complete search.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 11"><img src="assets/figures/figure-11.webp" width="1600" height="640" loading="lazy" alt="Figure 11. Five panels in a row: build, accept, maintain, transfer, and distill."></button>
-          <figcaption><span class="no">Fig. 11</span><span class="t">What happens to a program that passes its checks.</span><span class="d">It is stored in a library &#9312;, often after a further acceptance test &#9313;. The library then has to be maintained &#9314;, and its skills may carry over to new robots, models, or tasks &#9315;. Verified executions can also train a model's weights &#9316;.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 12"><img src="assets/figures/figure-12.webp" width="1600" height="615" loading="lazy" alt="Figure 12. Line chart of success rate against the number of LIBERO-90 source tasks seeding the library, 0 to 90: overall, task and position perturbation rise; the stove and moka pot task peaks near 0.68 at 50 and falls to 0.26 at 90."></button>
-          <figcaption><span class="no">Fig. 12</span><span class="t">What a growing skill library buys, and where it hurts.</span><span class="d">Zero-shot success of ASPIRE on LIBERO-PRO Long with libraries seeded from more and more LIBERO-90 source tasks. Average success rises with the library, while the stove and moka pot task, under task perturbation, falls from 0.68 to 0.26 between 50 and 90 source tasks. The dotted line is &pi;<sub>0.5</sub>.</span></figcaption></figure>
-        <figure class="fig"><button type="button" class="zoom" aria-label="Enlarge Figure 13"><img src="assets/figures/figure-13.webp" width="1600" height="908" loading="lazy" alt="Figure 13. Four panels: program representation, reliable verification, skill maintenance, and reproducible evaluation."></button>
-          <figcaption><span class="no">Fig. 13</span><span class="t">Four challenges and future directions.</span><span class="d">How to divide a task between programs and learned policies &#9312;, how verification can become reliable at a known cost &#9313;, how skill libraries stay useful as the world changes &#9314;, and how evaluation can be reproduced and checked against real robots &#9315;.</span></figcaption></figure>
       </div>
     </div>
   </section>
@@ -207,6 +232,6 @@
   <p><a href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub</a> &middot; <a href="#top">Back to top &uarr;</a></p>
 </footer>
 
-<script src="site/art.js?v=10"></script>
+<script src="site/art.js?v=11"></script>
 </body>
 </html>

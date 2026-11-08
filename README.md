@@ -16,7 +16,7 @@ site/styles.css     design: a painted yellow ground, oil-stick lettering, typewr
 site/art.js         the hero painting (drawn from a seeded random source), reveals, BibTeX copy
 assets/figures/     the paper's thirteen figures, cropped from the compiled PDF
 assets/teaser.webp  the opening illustration without labels (social preview)
-assets/art/*.webp   illustrations from the paper, used on the findings cards
+assets/art/*.webp   illustrations from the paper, used with the loop and the key numbers
 favicon.svg         the robot head
 ```
 

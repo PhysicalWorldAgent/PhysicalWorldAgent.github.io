@@ -83,8 +83,6 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .fig .no { grid-row: span 2; font: 400 18px/1.25 var(--marker); color: var(--red); text-transform: uppercase; }
 .fig .t { font: 400 19px/1.25 var(--marker); text-transform: uppercase; }
 .fig .d { font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 60em; }
-.figs { display: grid; gap: 64px; }
-.figs .fig { margin: 0; }
 .lightbox { width: min(96vw, 1500px); max-width: none; max-height: 94vh; padding: 0; border: 4px solid var(--ink); background: #fff; overflow: auto; }
 .lightbox::backdrop { background: rgba(22, 19, 15, .82); }
 .lightbox img { display: block; width: 100%; height: auto; }
@@ -114,14 +112,25 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .risk { margin: 0; font-size: 17px; padding-left: 16px; border-left: 5px solid var(--red); }
 .stage.c-blue .risk { border-color: var(--blue); } .stage.c-amber .risk { border-color: var(--amber); } .stage.c-green .risk { border-color: var(--green); }
 
-/* 03 four numbers */
-.wall { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
-.card { background: var(--white); border: 3px solid var(--ink); padding: 16px 16px 14px; display: flex; flex-direction: column; }
-.card img { display: block; width: 100%; height: 110px; object-fit: contain; margin-bottom: 12px; }
-.card .big { margin: 0 0 8px; font: 400 clamp(28px, 2.6vw, 36px)/1 var(--marker); color: var(--red); white-space: nowrap; }
-.card:nth-child(2) .big { color: var(--blue); } .card:nth-child(3) .big { color: var(--ink); } .card:nth-child(4) .big { color: var(--green); }
-.card p { margin: 0; font-size: 14px; line-height: 1.5; }
-.card .src { margin-top: auto; padding-top: 12px; font: 400 13px/1 var(--marker); color: var(--muted); text-transform: uppercase; }
+/* figures woven into the sections: alone, in pairs, or beside the number they support */
+.sec-in > .fig, .sec-in > .pair, .sec-in > .with-stat, .sec-in > .map { margin: 0 0 64px; }
+.sec-in > :last-child { margin-bottom: 0; }
+.fig.after { margin-top: 56px; }
+.stages + .pair { margin-top: 56px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.pair .fig, .with-stat .fig, .map .fig { margin: 0; }
+.with-stat { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; align-items: center; }
+.with-stat.flip { grid-template-columns: minmax(0, 1fr) 260px; }
+.stats { display: grid; gap: 24px; }
+.stat { background: var(--white); border: 3px solid var(--ink); padding: 16px 18px 14px; }
+.stat img { display: block; width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px; }
+.stat .big { margin: 0 0 8px; font: 400 clamp(30px, 2.8vw, 40px)/1 var(--marker); color: var(--red); white-space: nowrap; }
+.stat p { margin: 0; font-size: 14px; line-height: 1.5; }
+.stat .src { margin-top: 10px; font: 400 13px/1 var(--marker); color: var(--muted); text-transform: uppercase; }
+#tests .stat:nth-child(2) .big { color: var(--blue); }
+#learning .stat .big { color: var(--green); }
+.map { max-width: 760px; margin-left: auto !important; margin-right: auto !important; }
+.lead + .fig { margin-top: 8px; }
 
 /* 04 the argument */
 .closing { margin: 0 0 40px; font: 400 clamp(32px, 4.6vw, 62px)/1.12 var(--marker); max-width: 15em; }
@@ -160,7 +169,7 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 
 @media (max-width: 1000px) {
   .bar nav { display: none; }
-  .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pair { grid-template-columns: 1fr; gap: 48px; }
 }
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 92px; gap: 30px; }
@@ -170,6 +179,9 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
   .loop button:nth-child(n + 3) { border-top: 3px solid var(--ink); }
   .stage { grid-template-columns: 1fr; gap: 20px; }
   .stage img { max-width: 200px; }
+  .with-stat, .with-stat.flip { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat img { height: 80px; }
 }
 @media (max-width: 560px) {
   .mark span { font-size: 16px; }
@@ -179,7 +191,6 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
   h1 > span { width: auto; }
   h1 > span:nth-child(2) { transform: translateX(.4em); }
   .authors { font-size: 13.5px; gap: 0 10px; }
-  .wall { grid-template-columns: 1fr; }
   .fig figcaption { grid-template-columns: 1fr; }
   .fig .no { grid-row: auto; font-size: 15px; }
   .fig .t { font-size: 17px; }

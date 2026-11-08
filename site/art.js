@@ -280,9 +280,9 @@
   const reveal = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add("in"); reveal.unobserve(en.target); }
   }), { rootMargin: "0px 0px -10% 0px" });
-  document.querySelectorAll(".fig, .loop, .stages, .card, .closing, .five, .bib").forEach((node) => {
+  document.querySelectorAll(".fig, .loop, .stages, .stat, .closing, .five, .bib").forEach((node) => {
     // cards in a row arrive one after another
-    if (node.matches(".card")) node.style.setProperty("--rd", `${[...node.parentElement.children].indexOf(node) * 0.07}s`);
+    if (node.matches(".stat, .pair .fig")) node.style.setProperty("--rd", `${[...node.parentElement.children].indexOf(node) * 0.1}s`);
     node.classList.add("reveal");
     reveal.observe(node);
   });
