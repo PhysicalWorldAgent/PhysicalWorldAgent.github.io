@@ -325,7 +325,7 @@
   const reveal = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add("in"); reveal.unobserve(en.target); }
   }), { rootMargin: "0px 0px -10% 0px" });
-  document.querySelectorAll(".teaser, .abstract, .loop, .axis, .rqs article, .card, .takeaways, .five li, .ci, .closing, .bib").forEach((node) => {
+  document.querySelectorAll(".teaser, .abstract, .loop, .stages, .problems article, .axis, .rqs article, .card, .takeaways, .five li, .ci, .closing, .bib").forEach((node) => {
     const sibs = [...node.parentElement.children].filter((c) => c.tagName === node.tagName);
     node.style.setProperty("--rd", `${Math.min(sibs.indexOf(node), 7) * 0.07}s`);
     node.classList.add("reveal");
@@ -336,6 +336,29 @@
   const bib = document.getElementById("bibtex");
   const esc = (t) => t.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
   bib.innerHTML = bib.textContent.split("\n").map((l) => `<span>${esc(l)}</span>`).join("\n");
+
+  // the loop: four tabs, one stage of the opening scene each; arrow keys move between them
+  const tabs = [...document.querySelectorAll('.loop [role="tab"]')];
+  const select = (tab, focus) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach((t, i) => {
+    t.tabIndex = i ? -1 : 0;
+    t.addEventListener("click", () => select(t));
+    t.addEventListener("keydown", (e) => {
+      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (k) { e.preventDefault(); select(tabs[(i + k + tabs.length) % tabs.length], true); }
+    });
+  });
+
+  // the header gains a yellow ground once the hero has scrolled away
+  const bar = document.querySelector(".bar");
+  new IntersectionObserver(([en]) => bar.classList.toggle("solid", !en.isIntersecting), { rootMargin: "-80px 0px 0px 0px" }).observe(document.querySelector(".hero .copy"));
 
   // copy BibTeX
   document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {

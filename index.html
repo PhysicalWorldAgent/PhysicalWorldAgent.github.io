@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-  <link rel="stylesheet" href="site/styles.css?v=4">
+  <link rel="stylesheet" href="site/styles.css?v=6">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ScholarlyArticle","name":"When the World Is the Test Suite: Agentic Intelligence for the Physical World","datePublished":"2026","url":"https://PhysicalWorldAgent.github.io/",
    "author":[{"@type":"Person","name":"Kaixin Li"},{"@type":"Person","name":"Meng Luo"},{"@type":"Person","name":"Yanlin Li"},{"@type":"Person","name":"Yuchen Tian"},{"@type":"Person","name":"Xiang Liu"},{"@type":"Person","name":"Xiangru Jian"},{"@type":"Person","name":"Yan Yang"},{"@type":"Person","name":"Zhiheng Xi"},{"@type":"Person","name":"Yang Zhang"},{"@type":"Person","name":"Ziyang Luo"},{"@type":"Person","name":"Mingfei Cheng"},{"@type":"Person","name":"Hongzhan Lin"}],
@@ -34,6 +34,7 @@
     <a href="#loop">Loop</a>
     <a href="#findings">Findings</a>
     <a href="#unreported">Practice</a>
+    <a href="#open">Open problems</a>
     <a href="#cite">Cite</a>
   </nav>
   <a class="bar-link" href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub</a>
@@ -46,6 +47,7 @@
     <div class="copy">
       <h1 id="title"><span>When the <em class="w">World</em></span><span>Is the</span><span>Test Suite</span></h1>
       <p class="subtitle">Agentic Intelligence for the Physical World</p>
+      <p class="position">Writing a robot program is getting cheap. <b>Knowing what it did is not.</b></p>
       <div class="lower">
         <p class="authors">
           <span>Kaixin Li<sup>1</sup></span> <span>Meng Luo<sup>1</sup></span> <span>Yanlin Li<sup>1</sup></span> <span>Yuchen Tian<sup>2</sup></span>
@@ -98,12 +100,36 @@
       <p class="num">02</p>
       <h2 id="loop-h"><span>One loop, four places it can fail</span></h2>
       <p class="intro">A model writes a program, the program runs in physical dynamics, a judge decides from what happened whether it succeeded, and that result either guides a repair or adds the program to a library that later programs reuse.</p>
-      <ol class="loop">
-        <li class="c-blue"><b>Program</b><span>Action or orchestration; objective or world</span></li>
-        <li class="c-amber"><b>Physical world</b><span>A robot, a simulator, or a trained policy</span></li>
-        <li class="c-red"><b>Test results</b><span>Traces, checks, and outcomes</span></li>
-        <li class="c-green"><b>Experience</b><span>Skill libraries and distilled weights</span></li>
-      </ol>
+      <div class="loop" role="tablist" aria-label="The four stages of the loop">
+        <button type="button" role="tab" class="c-blue" id="t-program" aria-controls="p-program" aria-selected="true"><b>Program</b><span>Action or orchestration; objective or world</span></button>
+        <button type="button" role="tab" class="c-amber" id="t-world" aria-controls="p-world" aria-selected="false"><b>Physical world</b><span>A robot, a simulator, or a trained policy</span></button>
+        <button type="button" role="tab" class="c-red" id="t-results" aria-controls="p-results" aria-selected="false"><b>Test results</b><span>Traces, checks, and outcomes</span></button>
+        <button type="button" role="tab" class="c-green" id="t-experience" aria-controls="p-experience" aria-selected="false"><b>Experience</b><span>Skill libraries and distilled weights</span></button>
+      </div>
+      <p class="hint">The paper opens on one scene: a coding agent trying to put a moka pot on a stove. Tap a stage to follow it.</p>
+      <div class="stages">
+        <section class="stage c-blue" role="tabpanel" id="p-program" aria-labelledby="t-program">
+          <img src="assets/art/revise-slip.webp" alt="" width="371" height="366" loading="lazy">
+          <div><p class="scene">The fingers have closed on empty air beside the pot. The agent rereads the grasp routine it wrote an hour earlier and sees that it aimed at the center of the pot's segmentation mask. It changes the target to the handle.</p>
+          <p class="risk"><b>What can go wrong here.</b> The primitive interface limits what programs can do. Richer primitives raise success, and the strongest models can write some of the missing ones.</p></div>
+        </section>
+        <section class="stage c-amber" role="tabpanel" id="p-world" aria-labelledby="t-world" hidden>
+          <img src="assets/art/robot-stove.webp" alt="" width="440" height="409" loading="lazy">
+          <div><p class="scene">It runs the program again from fifty initial states.</p>
+          <p class="risk"><b>What can go wrong here.</b> Every run has to be paid for. A result may need an episode, a training run, or hardware, and the wait ranges from immediate feedback to about a day for one Eurekaverse curriculum search.</p></div>
+        </section>
+        <section class="stage c-red" role="tabpanel" id="p-results" aria-labelledby="t-results" hidden>
+          <img src="assets/art/trace-film.webp" alt="" width="440" height="352" loading="lazy">
+          <div><p class="scene">The pot is lifted in most of them. Yet the task is unfinished: has the pot reached the burner, and is it upright and stable?</p>
+          <p class="risk"><b>What can go wrong here.</b> Every kind of judge has documented failure modes. Predicates can misstate the task, the best of thirteen VLM detectors on FailBench reaches 0.77 balanced accuracy, and optimizing against a learned judge can amplify its errors.</p></div>
+        </section>
+        <section class="stage c-green" role="tabpanel" id="p-experience" aria-labelledby="t-experience" hidden>
+          <img src="assets/art/lib-admit.webp" alt="" width="399" height="363" loading="lazy">
+          <div><p class="scene">The agent writes a short note describing the failure and its fix, and adds it to a library that agents working on other tasks will read.</p>
+          <p class="risk"><b>What can go wrong here.</b> A library keeps whatever its acceptance test lets through. ASPIRE's average rises as its library grows, while one task falls from 0.68 to 0.26.</p></div>
+        </section>
+      </div>
+      <p class="source">The scene is a composite with illustrative details; systems such as ASPIRE already carry out this sequence of inspection, repair, validation, and reuse. Paper, Section 1 and Figure 2.</p>
       <div class="axes">
         <div class="axis">
           <h3>Axis one <i>where the program sits</i></h3>
@@ -131,14 +157,14 @@
       <h2 id="findings-h"><span>What the evidence says</span></h2>
       <p class="intro">Eight numbers from the systems the survey compares. Each shows either how much execution feedback is worth or how hard it is to trust.</p>
       <div class="wall">
-        <article class="card"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14% &rarr; 62%</p><p>An execution engine and a skill library together raise ASPIRE's macro-average success on LIBERO-PRO. Evolutionary search adds another 10 points.</p></article>
-        <article class="card"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">$15 &middot; 24 h</p><p>One full Eurekaverse run: about 15 US dollars of language-model calls and a day on eight A6000 GPUs, because judging a generated world means training a policy in it.</p></article>
-        <article class="card"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>The best balanced accuracy among thirteen vision-language detectors on FailBench, judging whether a manipulation succeeded.</p></article>
-        <article class="card"><img src="assets/art/break-spec.webp" alt="" loading="lazy" width="440" height="363"><p class="big">1 in 4</p><p>Of the failed OpenRUA episodes analyzed, about a quarter involve a success condition absent from the instruction or a predicate that contradicts it.</p></article>
-        <article class="card"><img src="assets/art/sim-twin.webp" alt="" loading="lazy" width="440" height="248"><p class="big">8 of 10</p><p>Tasks that Agentic RSR solved in reconstructed scenes and that also succeeded on the real robot.</p></article>
-        <article class="card"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68 &rarr; 0.26</p><p>One task's success as ASPIRE's library grows from 50 to 90 source tasks, while the average rises from 0.047 to 0.305.</p></article>
-        <article class="card"><img src="assets/art/false-pass.webp" alt="" loading="lazy" width="440" height="251"><p class="big">57 accepted</p><p>Changes an agent accepted over one 123-round run, while its target task never succeeded.</p></article>
-        <article class="card"><img src="assets/art/formal-stamp.webp" alt="" loading="lazy" width="344" height="309"><p class="big">24.8%</p><p>PDDL problems written zero-shot by GPT-4o on Planetarium that are semantically correct. A formal check is only as precise as its specification.</p></article>
+        <article class="card"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14% &rarr; 62%</p><p>An execution engine and a skill library together raise ASPIRE's macro-average success on LIBERO-PRO. Evolutionary search adds another 10 points.</p><p class="src">ASPIRE ablation &middot; Introduction</p></article>
+        <article class="card"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">$15 &middot; 24 h</p><p>One full Eurekaverse run: about 15 US dollars of language-model calls and a day on eight A6000 GPUs, because judging a generated world means training a policy in it.</p><p class="src">Eurekaverse &middot; Introduction</p></article>
+        <article class="card"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>The best balanced accuracy among thirteen vision-language detectors on FailBench, judging whether a manipulation succeeded.</p><p class="src">FailBench &middot; Introduction</p></article>
+        <article class="card"><img src="assets/art/break-spec.webp" alt="" loading="lazy" width="440" height="363"><p class="big">1 in 4</p><p>Of the failed OpenRUA episodes analyzed, about a quarter involve a success condition absent from the instruction or a predicate that contradicts it.</p><p class="src">OpenRUA &middot; Introduction</p></article>
+        <article class="card"><img src="assets/art/sim-twin.webp" alt="" loading="lazy" width="440" height="248"><p class="big">8 of 10</p><p>Tasks that Agentic RSR solved in reconstructed scenes and that also succeeded on the real robot.</p><p class="src">Agentic RSR &middot; Testing programs</p></article>
+        <article class="card"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68 &rarr; 0.26</p><p>One task's success as ASPIRE's library grows from 50 to 90 source tasks, while the average rises from 0.047 to 0.305.</p><p class="src">ASPIRE, LIBERO-PRO Long &middot; Learning from experience</p></article>
+        <article class="card"><img src="assets/art/false-pass.webp" alt="" loading="lazy" width="440" height="251"><p class="big">57 accepted</p><p>Changes an agent accepted over one 123-round run, while its target task never succeeded.</p><p class="src">One reported run &middot; Learning from experience</p></article>
+        <article class="card"><img src="assets/art/formal-stamp.webp" alt="" loading="lazy" width="344" height="309"><p class="big">24.8%</p><p>PDDL problems written zero-shot by GPT-4o on Planetarium that are semantically correct. A formal check is only as precise as its specification.</p><p class="src">Planetarium &middot; Testing programs</p></article>
       </div>
       <div class="takeaways">
         <h3>Takeaways</h3>
@@ -175,10 +201,27 @@
     </div>
   </section>
 
-  <!-- 05 cite -->
-  <section class="sec" id="cite" aria-labelledby="cite-h">
+  <!-- 05 open problems, each with the experiment that would start on it -->
+  <section class="sec yellow" id="open" aria-labelledby="open-h">
     <div class="sec-in">
       <p class="num">05</p>
+      <h2 id="open-h"><span>Open problems</span></h2>
+      <p class="intro">The paper pairs each open problem with a first experiment. Six of them:</p>
+      <div class="problems">
+        <article><h3>Error rates of the whole loop</h3><p class="exp"><b>First experiment</b> Measure how many program changes accepted by a whole loop of generation, judging, and library acceptance then fail an independent check.</p></article>
+        <article><h3>Judges that resist search</h3><p class="exp"><b>First experiment</b> Evaluate a judge on the programs a search produces, not only on a fixed set of episodes.</p></article>
+        <article><h3>Retention as a metric</h3><p class="exp"><b>First experiment</b> Re-run earlier task and seed pairs after each library update under matched conditions, and report retention with uncertainty.</p></article>
+        <article><h3>Measuring staleness</h3><p class="exp"><b>First experiment</b> Re-test a stored library after a controlled change of dynamics, camera, robot, or API, and report the fraction that still works.</p></article>
+        <article><h3>Postconditions for learned skills</h3><p class="exp"><b>First experiment</b> Chained VLA skills fail at the handoff. Give primitives an end state they declare and check, so that composition can be tested.</p></article>
+        <article><h3>Independent checks for generated tasks</h3><p class="exp"><b>First experiment</b> Run held-out, human-written checks on a sample of accepted tasks to estimate how many a pipeline accepts wrongly.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 cite -->
+  <section class="sec" id="cite" aria-labelledby="cite-h">
+    <div class="sec-in">
+      <p class="num">06</p>
       <h2 id="cite-h"><span>Cite</span></h2>
       <div class="bib">
         <button type="button" class="copy-btn" data-copy="bibtex">Copy</button>
@@ -198,6 +241,6 @@
   <p><a href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">Awesome-PhysicalWorldAgent</a> &middot; <a href="https://github.com/PhysicalWorldAgent/PhysicalWorldAgent.github.io">Website source</a> &middot; <a href="#top">Back to top &uarr;</a></p>
 </footer>
 
-<script src="site/art.js?v=4"></script>
+<script src="site/art.js?v=6"></script>
 </body>
 </html>
