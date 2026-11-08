@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-  <link rel="stylesheet" href="site/styles.css?v=6">
+  <link rel="stylesheet" href="site/styles.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ScholarlyArticle","name":"When the World Is the Test Suite: Agentic Intelligence for the Physical World","datePublished":"2026","url":"https://PhysicalWorldAgent.github.io/",
    "author":[{"@type":"Person","name":"Kaixin Li"},{"@type":"Person","name":"Meng Luo"},{"@type":"Person","name":"Yanlin Li"},{"@type":"Person","name":"Yuchen Tian"},{"@type":"Person","name":"Xiang Liu"},{"@type":"Person","name":"Xiangru Jian"},{"@type":"Person","name":"Yan Yang"},{"@type":"Person","name":"Zhiheng Xi"},{"@type":"Person","name":"Yang Zhang"},{"@type":"Person","name":"Ziyang Luo"},{"@type":"Person","name":"Mingfei Cheng"},{"@type":"Person","name":"Hongzhan Lin"}],
@@ -33,8 +33,6 @@
     <a href="#abstract">Survey</a>
     <a href="#loop">Loop</a>
     <a href="#findings">Findings</a>
-    <a href="#unreported">Practice</a>
-    <a href="#open">Open problems</a>
     <a href="#cite">Cite</a>
   </nav>
   <a class="bar-link" href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub</a>
@@ -47,7 +45,6 @@
     <div class="copy">
       <h1 id="title"><span>When the <em class="w">World</em></span><span>Is the</span><span>Test Suite</span></h1>
       <p class="subtitle">Agentic Intelligence for the Physical World</p>
-      <p class="position">Writing a robot program is getting cheap. <b>Knowing what it did is not.</b></p>
       <div class="lower">
         <p class="authors">
           <span>Kaixin Li<sup>1</sup></span> <span>Meng Luo<sup>1</sup></span> <span>Yanlin Li<sup>1</sup></span> <span>Yuchen Tian<sup>2</sup></span>
@@ -65,163 +62,93 @@
         </p>
         <p class="links">
           <a class="btn" href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub &rarr;</a>
-          <a class="btn ghost" href="#abstract">Read the abstract</a>
           <a class="btn ghost" href="#cite">BibTeX</a>
         </p>
       </div>
-      <p class="soon" aria-hidden="true">A survey<br>2026</p>
     </div>
     <figure class="art">
-      <svg viewBox="0 0 1000 800" role="img" aria-label="A painted robot head with ringed eyes and a grid of teeth, its chest showing two ticks, a cross and a question mark. Around it: the words test_suite.py crossed out and replaced by THE WORLD, an apple falling with g = 9.81, an hourglass marked 24 hours, a gripper holding a moka pot over a lit burner, and a tank tread whose cells read write, run, look, judge, repair, rerun, keep, reuse."></svg>
+      <svg viewBox="0 0 1000 800" role="img" aria-label="A painted robot head with ringed eyes and a grid of teeth, its chest showing two ticks, a cross and a question mark. Beside it, the words test_suite.py are crossed out and replaced by THE WORLD; an apple falls with g = 9.81; a tank tread below reads write, run, judge, keep."></svg>
     </figure>
   </section>
 
-  <!-- 01 abstract, with the paper's opening figure -->
+  <!-- 01 the idea, in two sentences and the paper's opening figure -->
   <section class="sec" id="abstract" aria-labelledby="abstract-h">
     <div class="sec-in">
-      <p class="num">01</p>
       <h2 id="abstract-h"><span>The test suite does not ship with the code</span></h2>
+      <p class="lead">Coding agents now write programs for robots. Whether a program works can only be found out by running it on a robot, in a simulator, or through the policy it trains.</p>
+      <p class="claim">Writing programs is getting cheap. <b>Trustworthy evidence about them is not.</b></p>
       <figure class="teaser">
-        <img src="assets/teaser.webp" width="1902" height="690" alt="Two scenes. Left: a robot at a laptop sees green ticks from a test suite. A paper ribbon of code carries the same program to the right, where the robot puts a moka pot on a stove, watched by a camera with a question mark, a simulator on a wall screen, a pass-fail clipboard and an hourglass.">
-        <figcaption><b>Same program, different test suite.</b> In software, the test suite usually ships with the code and returns a cheap, repeatable result. Once the program acts in the physical world, someone must build the judge, a simulator can stand in for the robot, and every physical test has to be paid for in execution.</figcaption>
+        <img src="assets/teaser.webp" width="1902" height="690" alt="Left: a robot at a laptop sees green ticks from a test suite. A ribbon of code carries the same program to the right, where the robot puts a moka pot on a stove, watched by a camera with a question mark, a simulator, a pass-fail clipboard and an hourglass.">
+        <figcaption>Same program, different test suite.</figcaption>
       </figure>
-      <div class="abstract">
-        <p class="lead">Coding agents built to repair software now write, test, and repair programs for robots. Unlike in software, the test suite does not come with the code: whether a robot program works must be established by running it on a robot, in a physics simulator, or through the policies it helps to train.</p>
-        <p>We examine this emerging area, agentic intelligence for the physical world, by treating the world as the program's test suite. We locate each program along two axes. The first is where it sits relative to the actuator, from programs that act or orchestrate learned policies to programs that write rewards and build training worlds. The second is what judges it, from simulator predicates and learned judges to humans and physical outcomes.</p>
-        <p>Along both axes, the same bottleneck appears: <mark>producing a program is becoming cheap, while obtaining trustworthy evidence about what it does remains costly and error-prone.</mark> This bottleneck limits what current results can claim. Comparisons that favor programs over end-to-end policies cover mainly conditions where those policies are known to be weak. Judges make errors that optimization can amplify, and skill libraries can improve on average while individual tasks regress.</p>
-        <p>Drawing on software engineering, we identify which of its practices transfer to physical agents and which break, and we analyze what current evaluations rarely report: cost, variance, the error and visibility of the judge, and the link between simulation and reality. We argue that progress will depend less on writing better programs than on building a physical counterpart of continuous integration: verification cheap enough to run often, reliable enough to trust under search, and maintained alongside the experience it validates, so that agents can keep improving as they act in the world.</p>
-      </div>
+      <details class="more">
+        <summary>Read the full abstract</summary>
+        <p>Coding agents built to repair software now write, test, and repair programs for robots. Unlike in software, the test suite does not come with the code: whether a robot program works must be established by running it on a robot, in a physics simulator, or through the policies it helps to train. We examine this emerging area, agentic intelligence for the physical world, by treating the world as the program's test suite. We locate each program along two axes. The first is where it sits relative to the actuator, from programs that act or orchestrate learned policies to programs that write rewards and build training worlds. The second is what judges it, from simulator predicates and learned judges to humans and physical outcomes.</p>
+        <p>Along both axes, the same bottleneck appears: producing a program is becoming cheap, while obtaining trustworthy evidence about what it does remains costly and error-prone. This bottleneck limits what current results can claim. Comparisons that favor programs over end-to-end policies cover mainly conditions where those policies are known to be weak. Judges make errors that optimization can amplify, and skill libraries can improve on average while individual tasks regress. Drawing on software engineering, we identify which of its practices transfer to physical agents and which break, and we analyze what current evaluations rarely report: cost, variance, the error and visibility of the judge, and the link between simulation and reality. We argue that progress will depend less on writing better programs than on building a physical counterpart of continuous integration: verification cheap enough to run often, reliable enough to trust under search, and maintained alongside the experience it validates, so that agents can keep improving as they act in the world.</p>
+      </details>
     </div>
   </section>
 
-  <!-- 02 the loop and the two axes -->
+  <!-- 02 the loop: four stages, each with one line of the opening scene and one risk -->
   <section class="sec yellow" id="loop" aria-labelledby="loop-h">
     <div class="sec-in">
-      <p class="num">02</p>
-      <h2 id="loop-h"><span>One loop, four places it can fail</span></h2>
-      <p class="intro">A model writes a program, the program runs in physical dynamics, a judge decides from what happened whether it succeeded, and that result either guides a repair or adds the program to a library that later programs reuse.</p>
+      <h2 id="loop-h"><span>Where the loop breaks</span></h2>
       <div class="loop" role="tablist" aria-label="The four stages of the loop">
-        <button type="button" role="tab" class="c-blue" id="t-program" aria-controls="p-program" aria-selected="true"><b>Program</b><span>Action or orchestration; objective or world</span></button>
-        <button type="button" role="tab" class="c-amber" id="t-world" aria-controls="p-world" aria-selected="false"><b>Physical world</b><span>A robot, a simulator, or a trained policy</span></button>
-        <button type="button" role="tab" class="c-red" id="t-results" aria-controls="p-results" aria-selected="false"><b>Test results</b><span>Traces, checks, and outcomes</span></button>
-        <button type="button" role="tab" class="c-green" id="t-experience" aria-controls="p-experience" aria-selected="false"><b>Experience</b><span>Skill libraries and distilled weights</span></button>
+        <button type="button" role="tab" class="c-blue" id="t-program" aria-controls="p-program" aria-selected="true"><i>1</i><b>Program</b></button>
+        <button type="button" role="tab" class="c-amber" id="t-world" aria-controls="p-world" aria-selected="false"><i>2</i><b>World</b></button>
+        <button type="button" role="tab" class="c-red" id="t-results" aria-controls="p-results" aria-selected="false"><i>3</i><b>Judge</b></button>
+        <button type="button" role="tab" class="c-green" id="t-experience" aria-controls="p-experience" aria-selected="false"><i>4</i><b>Experience</b></button>
       </div>
-      <p class="hint">The paper opens on one scene: a coding agent trying to put a moka pot on a stove. Tap a stage to follow it.</p>
       <div class="stages">
         <section class="stage c-blue" role="tabpanel" id="p-program" aria-labelledby="t-program">
           <img src="assets/art/revise-slip.webp" alt="" width="371" height="366" loading="lazy">
-          <div><p class="scene">The fingers have closed on empty air beside the pot. The agent rereads the grasp routine it wrote an hour earlier and sees that it aimed at the center of the pot's segmentation mask. It changes the target to the handle.</p>
-          <p class="risk"><b>What can go wrong here.</b> The primitive interface limits what programs can do. Richer primitives raise success, and the strongest models can write some of the missing ones.</p></div>
+          <div><p class="scene">The agent's grasp aimed at the pot, not its handle. It rewrites the routine.</p>
+          <p class="risk">A program can only use the primitives it is given.</p></div>
         </section>
         <section class="stage c-amber" role="tabpanel" id="p-world" aria-labelledby="t-world" hidden>
           <img src="assets/art/robot-stove.webp" alt="" width="440" height="409" loading="lazy">
-          <div><p class="scene">It runs the program again from fifty initial states.</p>
-          <p class="risk"><b>What can go wrong here.</b> Every run has to be paid for. A result may need an episode, a training run, or hardware, and the wait ranges from immediate feedback to about a day for one Eurekaverse curriculum search.</p></div>
+          <div><p class="scene">It runs the new program again from fifty starting states.</p>
+          <p class="risk">Every test costs an episode, a training run, or robot time.</p></div>
         </section>
         <section class="stage c-red" role="tabpanel" id="p-results" aria-labelledby="t-results" hidden>
           <img src="assets/art/trace-film.webp" alt="" width="440" height="352" loading="lazy">
-          <div><p class="scene">The pot is lifted in most of them. Yet the task is unfinished: has the pot reached the burner, and is it upright and stable?</p>
-          <p class="risk"><b>What can go wrong here.</b> Every kind of judge has documented failure modes. Predicates can misstate the task, the best of thirteen VLM detectors on FailBench reaches 0.77 balanced accuracy, and optimizing against a learned judge can amplify its errors.</p></div>
+          <div><p class="scene">The pot is lifted. But is it on the burner, upright and stable?</p>
+          <p class="risk">Every kind of judge in use has documented failure modes.</p></div>
         </section>
         <section class="stage c-green" role="tabpanel" id="p-experience" aria-labelledby="t-experience" hidden>
           <img src="assets/art/lib-admit.webp" alt="" width="399" height="363" loading="lazy">
-          <div><p class="scene">The agent writes a short note describing the failure and its fix, and adds it to a library that agents working on other tasks will read.</p>
-          <p class="risk"><b>What can go wrong here.</b> A library keeps whatever its acceptance test lets through. ASPIRE's average rises as its library grows, while one task falls from 0.68 to 0.26.</p></div>
+          <div><p class="scene">The fix goes into a skill library that other agents will read.</p>
+          <p class="risk">A library keeps whatever its acceptance test lets through.</p></div>
         </section>
       </div>
-      <p class="source">The scene is a composite with illustrative details; systems such as ASPIRE already carry out this sequence of inspection, repair, validation, and reuse. Paper, Section 1 and Figure 2.</p>
-      <div class="axes">
-        <div class="axis">
-          <h3>Axis one <i>where the program sits</i></h3>
-          <p class="scale"><span>acts on the robot</span><span>orchestrates learned policies</span><span>writes rewards</span><span>builds training worlds</span></p>
-          <p class="ends"><span>near the actuator</span><span>far from it</span></p>
-        </div>
-        <div class="axis">
-          <h3>Axis two <i>what judges it</i></h3>
-          <p class="scale"><span>simulator predicates</span><span>learned judges</span><span>humans</span><span>physical outcomes</span></p>
-          <p class="ends"><span>cheap to ask</span><span>costly to ask</span></p>
-        </div>
-      </div>
-      <div class="rqs">
-        <article><p class="rq">RQ1</p><h3>What do programs buy an agent that acts in the physical world, and what do they cost?</h3><p>Where in the stack should the program sit, when does it outperform an end-to-end policy, and how should the two be combined?</p></article>
-        <article><p class="rq">RQ2</p><h3>When the world is the test suite, how do agents learn that a program is wrong, and how far can that signal be trusted?</h3><p>What do traces, judges, simulators, and formal checks contribute, and what replaces physical trial when trial is not allowed?</p></article>
-        <article><p class="rq">RQ3</p><h3>How does validated experience accumulate, and what shows that progress is real?</h3><p>When do skill libraries help or hurt, how far does their content transfer, and what must be reported for a result to be interpretable?</p></article>
-      </div>
     </div>
   </section>
 
-  <!-- 03 findings: a wall of evidence -->
+  <!-- 03 four numbers -->
   <section class="sec" id="findings" aria-labelledby="findings-h">
     <div class="sec-in">
-      <p class="num">03</p>
-      <h2 id="findings-h"><span>What the evidence says</span></h2>
-      <p class="intro">Eight numbers from the systems the survey compares. Each shows either how much execution feedback is worth or how hard it is to trust.</p>
+      <h2 id="findings-h"><span>Four numbers</span></h2>
       <div class="wall">
-        <article class="card"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14% &rarr; 62%</p><p>An execution engine and a skill library together raise ASPIRE's macro-average success on LIBERO-PRO. Evolutionary search adds another 10 points.</p><p class="src">ASPIRE ablation &middot; Introduction</p></article>
-        <article class="card"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">$15 &middot; 24 h</p><p>One full Eurekaverse run: about 15 US dollars of language-model calls and a day on eight A6000 GPUs, because judging a generated world means training a policy in it.</p><p class="src">Eurekaverse &middot; Introduction</p></article>
-        <article class="card"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>The best balanced accuracy among thirteen vision-language detectors on FailBench, judging whether a manipulation succeeded.</p><p class="src">FailBench &middot; Introduction</p></article>
-        <article class="card"><img src="assets/art/break-spec.webp" alt="" loading="lazy" width="440" height="363"><p class="big">1 in 4</p><p>Of the failed OpenRUA episodes analyzed, about a quarter involve a success condition absent from the instruction or a predicate that contradicts it.</p><p class="src">OpenRUA &middot; Introduction</p></article>
-        <article class="card"><img src="assets/art/sim-twin.webp" alt="" loading="lazy" width="440" height="248"><p class="big">8 of 10</p><p>Tasks that Agentic RSR solved in reconstructed scenes and that also succeeded on the real robot.</p><p class="src">Agentic RSR &middot; Testing programs</p></article>
-        <article class="card"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68 &rarr; 0.26</p><p>One task's success as ASPIRE's library grows from 50 to 90 source tasks, while the average rises from 0.047 to 0.305.</p><p class="src">ASPIRE, LIBERO-PRO Long &middot; Learning from experience</p></article>
-        <article class="card"><img src="assets/art/false-pass.webp" alt="" loading="lazy" width="440" height="251"><p class="big">57 accepted</p><p>Changes an agent accepted over one 123-round run, while its target task never succeeded.</p><p class="src">One reported run &middot; Learning from experience</p></article>
-        <article class="card"><img src="assets/art/formal-stamp.webp" alt="" loading="lazy" width="344" height="309"><p class="big">24.8%</p><p>PDDL problems written zero-shot by GPT-4o on Planetarium that are semantically correct. A formal check is only as precise as its specification.</p><p class="src">Planetarium &middot; Testing programs</p></article>
-      </div>
-      <div class="takeaways">
-        <h3>Takeaways</h3>
-        <ul>
-          <li><b>Programs lead on new task structure, policies in distribution.</b> Demonstration-trained policies keep their in-distribution advantage in most reported comparisons.</li>
-          <li><b>Each kind of judge has documented failure modes.</b> Predicates can misstate the task, model-written checks can share the generator's errors, and optimization can amplify a learned judge's errors.</li>
-          <li><b>Acceptance tests shape what is reused.</b> A skill library keeps whatever its acceptance test lets through, so that test decides which gains and which regressions are retained.</li>
-          <li><b>Reuse lowers the cost of adaptation more reliably than it raises success.</b></li>
-        </ul>
+        <article class="card"><img src="assets/art/lib-build.webp" alt="" loading="lazy" width="352" height="326"><p class="big">14&rarr;62%</p><p>Success once the agent can watch its program run and reuse what worked.</p><p class="src">ASPIRE</p></article>
+        <article class="card"><img src="assets/art/break-cost.webp" alt="" loading="lazy" width="440" height="394"><p class="big">24 h</p><p>One full run on eight GPUs, because judging a generated world means training in it.</p><p class="src">Eurekaverse</p></article>
+        <article class="card"><img src="assets/art/judge-inspect.webp" alt="" loading="lazy" width="333" height="352"><p class="big">0.77</p><p>Best balanced accuracy of thirteen VLM judges of robot outcomes.</p><p class="src">FailBench</p></article>
+        <article class="card"><img src="assets/art/library-shelf.webp" alt="" loading="lazy" width="332" height="339"><p class="big">0.68&rarr;0.26</p><p>One task's success as the skill library grows.</p><p class="src">ASPIRE</p></article>
       </div>
     </div>
   </section>
 
-  <!-- 04 practice: what current reports leave out, and the argument -->
-  <section class="sec black" id="unreported" aria-labelledby="unreported-h">
+  <!-- 04 the argument -->
+  <section class="sec black" id="argument" aria-labelledby="argument-h">
     <div class="sec-in">
-      <p class="num">04</p>
-      <h2 id="unreported-h"><span>What reports leave out</span></h2>
-      <p class="intro">Without them, a gain cannot be told from a regression.</p>
-      <ol class="five">
-        <li><b>Cost</b><span>tokens, dollars, robot time</span></li>
-        <li><b>Variance</b><span>across seeds and trials</span></li>
-        <li><b>Judge visibility</b><span>what the agent can see of its judge</span></li>
-        <li><b>Judge error</b><span>how often the judge is wrong</span></li>
-        <li><b>Sim-to-real link</b><span>whether a simulated pass holds on hardware</span></li>
-      </ol>
-      <div class="ci">
-        <img src="assets/art/dir-ci.webp" alt="" loading="lazy" width="440" height="248">
-        <blockquote>
-          <p>Progress will depend less on writing better programs than on building a physical counterpart of continuous integration: verification cheap enough to run often, reliable enough to trust under search, and maintained alongside the experience it validates.</p>
-        </blockquote>
-      </div>
-      <p class="closing">If the physical world is to serve as the test suite, <em>its tests must be tested as well.</em></p>
+      <h2 id="argument-h" class="closing">If the world is the test suite, <em>its tests must be tested too.</em></h2>
+      <p class="five" aria-label="What reports rarely state">Cost <span>&middot;</span> Variance <span>&middot;</span> Judge error <span>&middot;</span> Judge visibility <span>&middot;</span> Sim-to-real</p>
+      <p class="five-note">What most reports leave out.</p>
     </div>
   </section>
 
-  <!-- 05 open problems, each with the experiment that would start on it -->
-  <section class="sec yellow" id="open" aria-labelledby="open-h">
-    <div class="sec-in">
-      <p class="num">05</p>
-      <h2 id="open-h"><span>Open problems</span></h2>
-      <p class="intro">The paper pairs each open problem with a first experiment. Six of them:</p>
-      <div class="problems">
-        <article><h3>Error rates of the whole loop</h3><p class="exp"><b>First experiment</b> Measure how many program changes accepted by a whole loop of generation, judging, and library acceptance then fail an independent check.</p></article>
-        <article><h3>Judges that resist search</h3><p class="exp"><b>First experiment</b> Evaluate a judge on the programs a search produces, not only on a fixed set of episodes.</p></article>
-        <article><h3>Retention as a metric</h3><p class="exp"><b>First experiment</b> Re-run earlier task and seed pairs after each library update under matched conditions, and report retention with uncertainty.</p></article>
-        <article><h3>Measuring staleness</h3><p class="exp"><b>First experiment</b> Re-test a stored library after a controlled change of dynamics, camera, robot, or API, and report the fraction that still works.</p></article>
-        <article><h3>Postconditions for learned skills</h3><p class="exp"><b>First experiment</b> Chained VLA skills fail at the handoff. Give primitives an end state they declare and check, so that composition can be tested.</p></article>
-        <article><h3>Independent checks for generated tasks</h3><p class="exp"><b>First experiment</b> Run held-out, human-written checks on a sample of accepted tasks to estimate how many a pipeline accepts wrongly.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 06 cite -->
+  <!-- 05 cite -->
   <section class="sec" id="cite" aria-labelledby="cite-h">
     <div class="sec-in">
-      <p class="num">06</p>
       <h2 id="cite-h"><span>Cite</span></h2>
       <div class="bib">
         <button type="button" class="copy-btn" data-copy="bibtex">Copy</button>
@@ -238,9 +165,9 @@
 
 <footer class="foot">
   <p class="foot-name">PhysicalWorldAgent</p>
-  <p><a href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">Awesome-PhysicalWorldAgent</a> &middot; <a href="https://github.com/PhysicalWorldAgent/PhysicalWorldAgent.github.io">Website source</a> &middot; <a href="#top">Back to top &uarr;</a></p>
+  <p><a href="https://github.com/PhysicalWorldAgent/Awesome-PhysicalWorldAgent">GitHub</a> &middot; <a href="#top">Back to top &uarr;</a></p>
 </footer>
 
-<script src="site/art.js?v=6"></script>
+<script src="site/art.js?v=8"></script>
 </body>
 </html>

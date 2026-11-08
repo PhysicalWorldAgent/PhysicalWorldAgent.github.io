@@ -189,13 +189,6 @@
   P.text("?", 538, 548, 52, { color: C.blue, rot: 8 });
   P.line(384, 560, 572, 556, { w: 3 });
 
-  // labels in the margins
-  P.at(2.2);
-  P.text("JUDGE?", 660, 206, 30, { rot: -6, color: C.white });
-  P.arrow([[656, 214], [604, 246]], { w: 4, head: 14, color: C.white });
-  P.text("TORQUE", 150, 330, 26, { rot: 4 });
-  P.arrow([[258, 322], [288, 300]], { w: 4, head: 14 });
-
   // the apple, and what it does when let go
   P.at(1.6);
   P.disc(846, 132, 52, C.red, { ry: 48 });
@@ -204,54 +197,16 @@
   P.fill([[856, 66], [890, 48], [884, 72]], C.green);
   P.arrow([[846, 200], [848, 270], [846, 344]], { w: 6, color: C.white, head: 20 });
   P.text("g = 9.81", 868, 290, 30, { color: C.white, rot: -4 });
-  P.text("m/s²", 876, 326, 22, { color: C.white, rot: -4 });
 
-  // an hourglass: every physical test is paid for in time
+  // the tread: the loop, running on wheels
   P.at(2.4);
-  P.text("24 h", 884, 438, 30, { rot: -5 });
-  P.line(878, 452, 962, 450, { w: 7 }); P.line(878, 612, 962, 610, { w: 7 });
-  P.line(886, 452, 886, 610, { w: 4 }); P.line(954, 452, 954, 610, { w: 4 });
-  P.fill([[904, 474], [936, 474], [920, 524]], C.amber);
-  P.fill([[898, 604], [942, 604], [920, 576]], C.orange);
-  P.stroke([[896, 458], [944, 458], [922, 530], [946, 604], [894, 604], [918, 530], [896, 458]], { w: 5, step: 400 });
-  P.line(920, 532, 920, 578, { w: 2, color: C.orange });
-
-  // a gripper holding a moka pot over a lit burner
-  P.at(2.8);
-  P.line(760, 404, 760, 440, { w: 7 });
-  P.circle(760, 398, 12, { w: 5 });
-  P.rect(732, 440, 56, 36, { w: 6 });
-  P.fill([[746, 520], [784, 520], [792, 556], [738, 556]], "#b9b5ad");
-  P.fill([[744, 562], [786, 562], [792, 598], [738, 598]], "#cfcbc2");
-  P.stroke([[746, 520], [784, 520], [792, 556], [738, 556], [746, 520]], { w: 4, step: 400 });
-  P.stroke([[744, 562], [786, 562], [792, 598], [738, 598], [744, 562]], { w: 4, step: 400 });
-  P.stroke([[752, 520], [765, 506], [778, 520]], { w: 4, step: 400 });
-  P.disc(765, 503, 5, C.ink);
-  P.stroke([[792, 528], [812, 530], [806, 552], [790, 550]], { w: 4, step: 400 });
-  P.line(742, 524, 726, 514, { w: 4 });
-  P.stroke([[742, 476], [718, 512], [734, 538]], { w: 7, step: 400 });
-  P.stroke([[778, 476], [812, 506], [796, 534]], { w: 7, step: 400 });
-  P.line(718, 630, 818, 628, { w: 6 });
-  for (const x of [738, 762, 786, 806]) P.stroke([[x, 626], [x - 5, 616], [x + 2, 606]], { w: 4, color: C.blue, step: 400 });
-
-  // the tread: a long box of things to do, running on wheels
-  P.at(3.2);
-  P.text("FRICTION", 104, 620, 24, { rot: -2 });
-  P.stroke([[104, 628], [130, 622], [156, 630], [182, 622], [208, 630]], { w: 3, step: 400 });
-  P.text("$15", 560, 626, 30, { rot: -6, color: C.red });
   P.scumble(110, 650, 760, 100, C.white, { bw: 30, o: 0.55 });
   P.stroke([[100, 642], [872, 640], [908, 700], [872, 762], [100, 760], [40, 701], [100, 642]], { w: 8, twice: true, step: 60 });
   P.line(100, 701, 880, 700, { w: 5 });
-  const WORDS = ["WRITE", "RUN", "LOOK", "JUDGE", "REPAIR", "RERUN", "KEEP", "REUSE"];
-  for (let k = 0; k <= 8; k++) P.line(104 + k * 96, 642, 104 + k * 96, 760, { w: 5, gap: 0.02 });
-  WORDS.forEach((w, k) => {
-    P.text(w, 152 + k * 96, 683, w.length > 4 ? 21 : 24, { anchor: "middle", color: k === 2 ? C.red : k === 5 ? C.blue : C.ink, rot: (k % 2 ? 2 : -2) });
-    P.circle(152 + k * 96, 731, 19, { w: 4 });
-    P.disc(152 + k * 96, 731, 5, C.ink);
-  });
-  // stray marks
-  P.line(276, 470, 296, 490, { w: 4 }); P.line(296, 470, 276, 490, { w: 4 });
-  P.line(668, 360, 684, 360, { w: 4 }); P.line(676, 352, 676, 368, { w: 4 });
+  const WORDS = [['WRITE', C.blue], ['RUN', C.ink], ['JUDGE', C.red], ['KEEP', C.green]];
+  for (let k = 0; k <= 4; k++) P.line(104 + k * 192, 642, 104 + k * 192, 701, { w: 5, gap: 0.02 });
+  WORDS.forEach(([w, color], k) => P.text(w, 200 + k * 192, 686, 30, { anchor: 'middle', color, rot: k % 2 ? 2 : -2 }));
+  for (let k = 0; k < 8; k++) { P.circle(152 + k * 96, 731, 19, { w: 4 }); P.disc(152 + k * 96, 731, 5, C.ink); }
 
   // pupils follow the pointer
   const look = (x, y) => {
@@ -325,7 +280,7 @@
   const reveal = new IntersectionObserver((entries) => entries.forEach((en) => {
     if (en.isIntersecting) { en.target.classList.add("in"); reveal.unobserve(en.target); }
   }), { rootMargin: "0px 0px -10% 0px" });
-  document.querySelectorAll(".teaser, .abstract, .loop, .stages, .problems article, .axis, .rqs article, .card, .takeaways, .five li, .ci, .closing, .bib").forEach((node) => {
+  document.querySelectorAll(".teaser, .loop, .stages, .card, .closing, .five, .bib").forEach((node) => {
     const sibs = [...node.parentElement.children].filter((c) => c.tagName === node.tagName);
     node.style.setProperty("--rd", `${Math.min(sibs.indexOf(node), 7) * 0.07}s`);
     node.classList.add("reveal");
