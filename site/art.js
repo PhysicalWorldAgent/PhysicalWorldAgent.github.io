@@ -196,7 +196,8 @@
   P.line(846, 86, 852, 58, { w: 5, color: C.white });
   P.fill([[856, 66], [890, 48], [884, 72]], C.green);
   P.arrow([[846, 200], [848, 270], [846, 344]], { w: 6, color: C.white, head: 20 });
-  P.text("g = 9.81", 868, 290, 30, { color: C.white, rot: -4 });
+  // typed rather than lettered: the marker has no lowercase g, and its 1 reads as a bracket
+  P.text("g = 9.81", 864, 290, 26, { color: C.white, rot: -4 }).classList.add("typed");
 
   // the tread: the loop, running on wheels
   P.at(2.4);
@@ -248,12 +249,14 @@
       const x = r() < 0.5 ? r() * W * 0.2 : W - r() * W * 0.25, y = r() * H;
       G.stroke([[x, y], [x + 60 + r() * 140, y + (r() - 0.5) * 60]], { w: 40 + r() * 40, color: C.orange, o: 0.5, amp: 10 });
     }
-    // a black bar down the left edge with a red ladder beside it (wide screens only, where it clears the title)
-    if (W >= 760) {
-    G.fill([[0, H * 0.06], [W * 0.022, H * 0.07], [W * 0.026, H * 0.44], [0, H * 0.46]], C.ink, { amp: 8 });
-    const lx = Math.max(14, W * 0.03);
-    G.line(lx, H * 0.1, lx + 2, H * 0.4, { w: 4, color: C.red }); G.line(lx + 16, H * 0.1, lx + 18, H * 0.4, { w: 4, color: C.red });
-    for (let y = H * 0.12; y < H * 0.4; y += 22) G.line(lx, y, lx + 17, y + 2, { w: 3, color: C.red, amp: 1 });
+    // a black bar down the left edge with a red ladder beside it, only where the margin is wide enough to keep
+    // them clear of the title (the brush filter pushes each stroke about 13px either way)
+    const copyLeft = document.querySelector(".hero .copy").getBoundingClientRect().left - hero.getBoundingClientRect().left;
+    if (W >= 760 && copyLeft >= 60) {
+      G.fill([[0, H * 0.06], [W * 0.022, H * 0.07], [W * 0.026, H * 0.44], [0, H * 0.46]], C.ink, { amp: 8 });
+      const lx = Math.min(Math.max(14, W * 0.03), copyLeft - 38);
+      G.line(lx, H * 0.1, lx + 2, H * 0.4, { w: 4, color: C.red }); G.line(lx + 16, H * 0.1, lx + 18, H * 0.4, { w: 4, color: C.red });
+      for (let y = H * 0.12; y < H * 0.4; y += 22) G.line(lx, y, lx + 17, y + 2, { w: 3, color: C.red, amp: 1 });
     }
     // white laid in behind the authors and the buttons
     const hb = hero.getBoundingClientRect(), box = (node, pad) => {
@@ -318,8 +321,9 @@
   // figures open full size in a lightbox; a click anywhere or Escape closes it
   const box = document.querySelector(".lightbox"), boxImg = box.querySelector("img");
   document.querySelectorAll(".zoom").forEach((b) => b.addEventListener("click", () => {
-    const img = b.querySelector("img");
-    boxImg.src = img.currentSrc || img.src; boxImg.alt = img.alt;
+    // the enlarged view always takes the largest source, since it is opened to read the small print
+    const img = b.querySelector("img"), largest = img.srcset ? img.srcset.split(",").pop().trim().split(/\s+/)[0] : "";
+    boxImg.src = largest || img.currentSrc || img.src; boxImg.alt = img.alt;
     box.showModal();
   }));
   box.addEventListener("click", () => box.close());

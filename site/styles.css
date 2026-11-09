@@ -1,6 +1,8 @@
 /* PhysicalWorldAgent: a painted yellow ground, oil-stick lettering, typewritten notes. Few words, room around them. */
 :root {
   --yellow: #f2c12e; --ink: #16130f; --white: #f6f1e4; --paper: #f3ede0; --red: #d43a2c; --blue: #2c5ca8; --amber: #d98a1c; --green: #3f8f4e; --muted: #5a5347;
+  /* darker red and amber for small text, which must stay legible on the yellow ground as well as on paper */
+  --red-ink: #9b2016; --amber-ink: #a8650a; --green-ink: #2f7a3e;
   --marker: "Permanent Marker", "Comic Sans MS", cursive;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --gutter: clamp(16px, 5vw, 72px);
@@ -45,7 +47,7 @@ h1 > span:nth-child(1) { transform: rotate(-1.5deg); }
 h1 > span:nth-child(2) { transform: translateX(.6em); }
 h1 > span:nth-child(3) { transform: rotate(-.8deg); }
 h1 em { font-style: normal; color: var(--red); }
-.subtitle { margin: 18px 0 0; font: 600 clamp(16px, 1.45vw, 21px)/1.35 var(--mono); }
+.subtitle { margin: 18px 0 0; font: 600 clamp(16px, 1.45vw, 21px)/1.35 var(--mono); text-wrap: balance; }
 .lower { margin-top: clamp(26px, 4vh, 40px); max-width: 38em; }
 .authors { margin: 0; font: 500 14.5px/1.75 var(--mono); display: flex; flex-wrap: wrap; gap: 0 14px; }
 .authors span { white-space: nowrap; }
@@ -60,13 +62,14 @@ sup { font-size: .68em; line-height: 0; margin-left: 1px; }
 .art { position: relative; z-index: 1; margin: 0; }
 .art svg { display: block; width: 100%; height: auto; overflow: visible; }
 .art text { font-family: var(--marker); }
+.art text.typed { font-family: var(--mono); font-style: italic; }
 
 /* sections */
 .sec { position: relative; background: var(--paper); padding: clamp(80px, 11vw, 140px) var(--gutter); overflow: hidden; isolation: isolate; }
 .sec.yellow { background: var(--yellow); }
 .sec.black { background: var(--ink); color: var(--white); }
 .sec-in { position: relative; z-index: 4; max-width: 1040px; margin: 0 auto; }
-h2 { margin: 0 0 40px; font: 400 clamp(32px, 4.2vw, 54px)/1.1 var(--marker); text-transform: uppercase; }
+h2 { margin: 0 0 40px; font: 400 clamp(32px, 4.2vw, 54px)/1.1 var(--marker); text-transform: uppercase; text-wrap: balance; }
 h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .sec.yellow h2 span { background: var(--white); }
 
@@ -80,9 +83,9 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .zoom:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
 .zoom img { display: block; width: 100%; height: auto; }
 .fig figcaption { display: grid; grid-template-columns: 5.2em minmax(0, 1fr); gap: 2px 14px; margin-top: 14px; }
-.fig .no { grid-row: span 2; font: 400 18px/1.25 var(--marker); color: var(--red); text-transform: uppercase; }
-.fig .t { font: 400 19px/1.25 var(--marker); text-transform: uppercase; }
-.fig .d { font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 60em; }
+.fig .no { grid-row: span 2; padding-top: 3px; font: 600 13px/1.5 var(--mono); letter-spacing: .08em; color: var(--red-ink); text-transform: uppercase; white-space: nowrap; }
+.fig .t { font: 400 19px/1.25 var(--marker); text-transform: uppercase; text-wrap: balance; }
+.fig .d { font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 60em; text-wrap: pretty; }
 .lightbox { width: min(96vw, 1500px); max-width: none; max-height: 94vh; padding: 0; border: 4px solid var(--ink); background: #fff; overflow: auto; }
 .lightbox::backdrop { background: rgba(22, 19, 15, .82); }
 .lightbox img { display: block; width: 100%; height: auto; }
@@ -98,11 +101,11 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .loop button { position: relative; display: flex; align-items: baseline; gap: 10px; font: inherit; color: inherit; background: transparent; border: 0; border-left: 3px solid var(--ink); padding: 18px 20px; cursor: pointer; transition: background .2s; }
 .loop button:first-child { border-left: 0; }
 .loop button:hover { background: color-mix(in srgb, var(--yellow) 25%, var(--white)); }
-.loop i { font: 400 20px/1 var(--marker); font-style: normal; opacity: .45; }
+.loop i { font: 600 15px/1 var(--mono); font-style: normal; opacity: .55; }
 .loop b { font: 400 clamp(20px, 2vw, 26px)/1 var(--marker); text-transform: uppercase; }
 .loop button[aria-selected="true"] { background: var(--ink); color: var(--white); }
 .loop button[aria-selected="true"] i { opacity: .7; }
-.c-blue b { color: var(--blue); } .c-amber b { color: var(--amber); } .c-red b { color: var(--red); } .c-green b { color: var(--green); }
+.c-blue b { color: var(--blue); } .c-amber b { color: var(--amber-ink); } .c-red b { color: var(--red); } .c-green b { color: var(--green-ink); }
 .loop button[aria-selected="true"].c-blue b { color: #9cbcf0; } .loop button[aria-selected="true"].c-amber b { color: #f2b45a; }
 .loop button[aria-selected="true"].c-red b { color: #f2867a; } .loop button[aria-selected="true"].c-green b { color: #8fd09b; }
 .stage { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 36px; align-items: center; }
@@ -119,6 +122,8 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 .stages + .pair { margin-top: 56px; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
 .pair .fig, .with-stat .fig, .map .fig { margin: 0; }
+/* the two figures of a pair get the same frame, so their captions start on one line */
+.pair .zoom img { aspect-ratio: 1600 / 867; object-fit: contain; }
 .with-stat { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; align-items: center; }
 .with-stat.flip { grid-template-columns: minmax(0, 1fr) 260px; }
 .stats { display: grid; gap: 24px; }
@@ -142,8 +147,8 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 /* 05 cite */
 .bib { position: relative; background: var(--white); border: 3px solid var(--ink); }
 .bib pre { margin: 0; padding: 22px 22px 20px; font: 400 13.5px/1.6 var(--mono); white-space: normal; }
-.bib pre span { display: block; padding-left: 11ch; text-indent: -11ch; white-space: pre-wrap; overflow-wrap: anywhere; }
-.copy-btn { position: absolute; top: -18px; right: 18px; font: 400 16px/1 var(--marker); background: var(--red); color: var(--white); border: 3px solid var(--ink); padding: 8px 14px 6px; cursor: pointer; }
+.bib pre span { display: block; padding-left: 17ch; text-indent: -17ch; white-space: pre-wrap; overflow-wrap: anywhere; }
+.copy-btn { position: absolute; top: -18px; right: 18px; font: 400 16px/1 var(--marker); background: #b8301f; color: var(--white); border: 3px solid var(--ink); padding: 8px 14px 6px; cursor: pointer; }
 
 /* footer */
 .foot { background: var(--ink); color: var(--white); padding: 30px var(--gutter) 36px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 28px; border-top: 5px solid var(--yellow); }
@@ -181,7 +186,12 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
   .stage img { max-width: 200px; }
   .with-stat, .with-stat.flip { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
-  .stat img { height: 80px; }
+  /* below the figure, a number card runs sideways: the drawing on the left, the number and its note on the right */
+  .stat { display: grid; grid-template-columns: 112px minmax(0, 1fr); column-gap: 20px; align-items: center; }
+  .stat img { grid-row: 1 / span 3; height: 96px; margin: 0; }
+}
+@media (max-width: 700px) {
+  .stats { grid-template-columns: 1fr; gap: 18px; }
 }
 @media (max-width: 560px) {
   .mark span { font-size: 16px; }
@@ -192,9 +202,21 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
   h1 > span:nth-child(2) { transform: translateX(.4em); }
   .authors { font-size: 13.5px; gap: 0 10px; }
   .fig figcaption { grid-template-columns: 1fr; }
-  .fig .no { grid-row: auto; font-size: 15px; }
+  .fig .no { grid-row: auto; padding-top: 0; font-size: 12px; }
   .fig .t { font-size: 17px; }
   .fig .d { font-size: 13px; }
   .zoom { padding: 4px; }
-  .figs { gap: 48px; }
+  .stat { grid-template-columns: 84px minmax(0, 1fr); column-gap: 16px; }
+  .stat img { height: 80px; }
+  .stat .big { font-size: 28px; }
+  .bib pre { padding: 18px 14px 16px; font-size: 12.5px; }
+  .bib pre span { padding-left: 4ch; text-indent: -4ch; }
+}
+/* the narrowest phones: a smaller mark, so the GitHub button stays on screen */
+@media (max-width: 380px) {
+  .bar { gap: 10px; }
+  .mark { gap: 6px; }
+  .mark img { width: 28px; height: 28px; }
+  .mark span { font-size: 14px; }
+  .bar-link { font-size: 14px; padding: 6px 8px 4px; }
 }
