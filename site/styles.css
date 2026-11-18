@@ -147,7 +147,7 @@ h2 span { display: inline; padding: 2px 12px 0; background: var(--yellow); box-d
 /* 05 cite */
 .bib { position: relative; background: var(--white); border: 3px solid var(--ink); }
 .bib pre { margin: 0; padding: 22px 22px 20px; font: 400 13.5px/1.6 var(--mono); white-space: normal; }
-.bib pre span { display: block; padding-left: 17ch; text-indent: -17ch; white-space: pre-wrap; overflow-wrap: anywhere; }
+.bib pre span { display: block; padding-left: 12ch; text-indent: -12ch; white-space: pre-wrap; overflow-wrap: anywhere; }
 .copy-btn { position: absolute; top: -18px; right: 18px; font: 400 16px/1 var(--marker); background: #b8301f; color: var(--white); border: 3px solid var(--ink); padding: 8px 14px 6px; cursor: pointer; }
 
 /* footer */
